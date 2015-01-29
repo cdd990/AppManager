@@ -1,0 +1,30 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="android:Theme.DeviceDefault.Light.DarkActionBar">
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:actionBarStyle">@style/AppActionBarStyle</item>
+        <item name="android:actionBarItemBackground">@drawable/selector_actionitem_bg</item>
+        <item name="android:selectableItemBackground">@drawable/selector_actionitem_bg</item>
+        <item name="android:listViewStyle">@style/AppListViewStyle</item>
+    </style>
+    
+    <style name="AppActionBarStyle" parent="android:Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
+        <item name="android:icon">@drawable/ic_launcher</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="ActionBarThemeOverlay" parent="">
+        <item name="android:textColorPrimary">#fff</item>
+    </style>
+
+    <style name="TabIndicator">
+        <item name="android:theme">@style/ActionBarThemeOverlay</item>
+    </style>
+
+    <style name="AppListViewStyle" parent="android:Widget.DeviceDefault.Light.ListView">
+        <item name="android:listSelector">@drawable/selector_actionitem_bg</item>
+    </style>
+
+</resources>

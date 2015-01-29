@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_bar"
+    android:layout_width="match_parent"
+    android:layout_height="?android:actionBarSize"
+    android:background="@android:color/white"
+    android:elevation="8dp">
+    <ImageButton
+        android:id="@+id/btn_back"
+        style="?android:actionButtonStyle"
+        android:layout_width="?android:actionBarSize"
+        android:layout_height="?android:actionBarSize"
+        android:src="@drawable/ic_arrow_back_24dp"
+        android:tint="@color/colorPrimary"/>
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:background="@null"/>
+
+</LinearLayout>
