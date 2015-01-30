@@ -66,23 +66,23 @@
 	        android:layout_weight="1"
 	        android:layout_height="wrap_content"
 	        android:text="Open data dir"/>
-	    <Button 
-	        android:id="@+id/btn_market"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="wrap_content"
-	        android:text="View in market"/>
+        <Button
+            android:id="@+id/btn_app_sdcard_dir"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Open sdcard dir"/>
 	</LinearLayout>
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal">
-	    <Button 
-	        android:id="@+id/btn_send_info"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="wrap_content"
-	        android:text="Share info"/>
+        <Button
+            android:id="@+id/btn_market"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="View in market"/>
 	    <Button
 	        android:id="@+id/btn_send_apk"
 	        android:layout_width="0dp"
@@ -90,4 +90,15 @@
 	        android:layout_height="wrap_content"
 	        android:text="Share apk"/>
 	</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_send_info"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Share info"/>
+    </LinearLayout>
 </LinearLayout>

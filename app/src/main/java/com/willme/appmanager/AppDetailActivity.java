@@ -88,6 +88,7 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
         findViewById(R.id.btn_app_ops).setOnClickListener(this);
         findViewById(R.id.btn_market).setOnClickListener(this);
         findViewById(R.id.btn_app_dir).setOnClickListener(this);
+        findViewById(R.id.btn_app_sdcard_dir).setOnClickListener(this);
         findViewById(R.id.btn_open).setOnClickListener(this);
         findViewById(R.id.btn_send_apk).setOnClickListener(this);
         findViewById(R.id.btn_send_info).setOnClickListener(this);
@@ -142,6 +143,9 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.btn_app_dir:
 			openDir(mAppInfo.dataDir);
+			break;
+		case R.id.btn_app_sdcard_dir:
+			ospenDir("/sdcard/Android/data/" + mAppInfo.packageName);
 			break;
 		case R.id.btn_send_apk:
 			Intent shareIntent = new Intent(Intent.ACTION_SEND);
