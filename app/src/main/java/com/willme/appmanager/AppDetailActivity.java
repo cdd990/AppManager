@@ -145,7 +145,7 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 			openDir(mAppInfo.dataDir);
 			break;
 		case R.id.btn_app_sdcard_dir:
-			ospenDir("/sdcard/Android/data/" + mAppInfo.packageName);
+			openDir("/sdcard/Android/data/" + mAppInfo.packageName);
 			break;
 		case R.id.btn_send_apk:
 			Intent shareIntent = new Intent(Intent.ACTION_SEND);
