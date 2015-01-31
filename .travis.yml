@@ -1,5 +1,5 @@
 language: android
-
+sudo: false
 # Emulator Management: Create, Start and Wait
 before_script:
   - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
