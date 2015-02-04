@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
         if(savedInstanceState != null){
             mDebugFragment = (AppListFragment) getFragmentManager().findFragmentByTag(getFragmentName(0));
             mAllFragment = (AppListFragment) getFragmentManager().findFragmentByTag(getFragmentName(1));
-            mDebugFragment = (AppListFragment) getFragmentManager().findFragmentByTag(getFragmentName(2));
+            mDisabledFragment = (AppListFragment) getFragmentManager().findFragmentByTag(getFragmentName(2));
         }
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
