@@ -89,11 +89,21 @@ public class MainActivity extends BaseActivity {
             getActionBar().setDisplayShowHomeEnabled(false);
             getActionBar().setDisplayShowCustomEnabled(true);
         }
-
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        
+
+        if(savedInstanceState != null){
+            mDebugFragment = (AppListFragment) getFragmentManager().findFragmentByTag(getFragmentName(0));
+            mAllFragment = (AppListFragment) getFragmentManager().findFragmentByTag(getFragmentName(1));
+            mDebugFragment = (AppListFragment) getFragmentManager().findFragmentByTag(getFragmentName(2));
+        }
+
         mViewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
-			
+
+            private final int[] TITLES = new int[] {
+                    R.string.title_debug,
+                    R.string.title_all_apps,
+                    R.string.title_disabled
+            };
 			@Override
 			public int getCount() {
 				return 3;
@@ -120,8 +130,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public CharSequence getPageTitle(int position) {
-                AppListFragment fragment = (AppListFragment)getItem(position);
-                return getString(fragment.getTitleId());
+                return getString(TITLES[position]);
             }
         });
 
@@ -173,8 +182,11 @@ public class MainActivity extends BaseActivity {
                 return mAllFragment.getListView();
             case 2:
                 return mDisabledFragment.getListView();
-
         }
         return null;
+    }
+
+    private String getFragmentName(int index) {
+        return "android:switcher:" + mViewPager.getId() + ":" + index;
     }
 }
