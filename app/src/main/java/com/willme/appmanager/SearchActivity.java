@@ -33,12 +33,18 @@ public class SearchActivity extends BaseActivity{
         }
 
         mEditText = (EditText) mSearchView.findViewById(R.id.et_search);
-        mFragment = new SearchFragment();
-        getFragmentManager()
-                .beginTransaction()
-                .add(R.id.frag_search, mFragment)
-                .hide(mFragment)
-                .commit();
+        if(savedInstanceState != null){
+            mFragment = (SearchFragment) getFragmentManager()
+                    .findFragmentById(R.id.frag_search);
+        }
+        if(mFragment ==null){
+            mFragment = new SearchFragment();
+            getFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.frag_search, mFragment)
+                    .hide(mFragment)
+                    .commit();
+        }
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
