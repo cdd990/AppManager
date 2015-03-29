@@ -82,7 +82,9 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
             finish();
             return;
         }
-		((TextView)findViewById(R.id.tv_package_name)).setText(packageName);
+
+
+        ((TextView) findViewById(R.id.tv_package_name)).setText(packageName);
         mDisableButton.setOnClickListener(this);
         findViewById(R.id.btn_app_info).setOnClickListener(this);
         findViewById(R.id.btn_app_ops).setOnClickListener(this);
@@ -264,7 +266,7 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 		super.onDestroy();
         try{
             unregisterReceiver(mReceiver);
-        }catch (Exception e){}
+        }catch (Exception ignored){}
 	}
 	
 	public class UninstallReceiver extends BroadcastReceiver {
