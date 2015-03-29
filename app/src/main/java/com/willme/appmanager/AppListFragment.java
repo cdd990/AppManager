@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.widget.ListView;
 
@@ -49,10 +50,18 @@ public class AppListFragment extends ListFragment implements
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Intent intent = new Intent(getActivity(), AppDetailActivity.class);
 		AppEntry app = (AppEntry) mAdapter.getItem(position);
-		intent.putExtra(AppDetailActivity.EXTRA_PACKAGE_NAME,
-				app.getApplicationInfo().packageName);
-		startActivity(intent);
-	}
+        intent.putExtra(AppDetailActivity.EXTRA_PACKAGE_NAME,
+                app.getApplicationInfo().packageName);
+        if (Build.VERSION.SDK_INT >= 21) {
+            ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), v, v.getTransitionName());
+            startActivity(intent, activityOptions.toBundle());
+        } else if (Build.VERSION.SDK_INT >= 16) {
+            ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeScaleUpAnimation(v, (int) (v.getX()), (int) (v.getY()), v.getWidth(), v.getHeight());
+            startActivity(intent, activityOptions.toBundle());
+        } else {
+            startActivity(intent);
+        }
+    }
 
 	@Override
 	public Loader<List<AppEntry>> onCreateLoader(int id, Bundle args) {
