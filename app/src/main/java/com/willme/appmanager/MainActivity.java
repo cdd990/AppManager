@@ -30,7 +30,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.ListView;
 import android.widget.Toolbar;
 
@@ -157,15 +156,7 @@ public class MainActivity extends BaseActivity {
         if(item.getItemId() == R.id.action_search){
             View searchItem = findViewById(R.id.action_search);
             Intent intent = new Intent(this, SearchActivity.class);
-            if(Build.VERSION.SDK_INT >= 21){
-                ViewAnimationUtils.createCircularReveal(
-                        searchItem
-                        , (int) (searchItem.getX())
-                        , (int) (searchItem.getY())
-                        , 0
-                        , 100).start();
-//                startActivity(intent);
-            }else if(Build.VERSION.SDK_INT >= 16){
+            if(Build.VERSION.SDK_INT >= 16){
                 ActivityOptionsCompat activityOptions =
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(searchItem
