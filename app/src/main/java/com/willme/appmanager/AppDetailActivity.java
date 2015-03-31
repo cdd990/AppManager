@@ -1,5 +1,6 @@
 package com.willme.appmanager;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -23,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.io.File;
@@ -119,7 +121,11 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_open:
-			startApplication(mAppInfo.packageName);
+            if(!mAppInfo.enabled){
+                Toast.makeText(this, R.string.detail_toast_disabled_while_open, Toast.LENGTH_SHORT).show();
+            }else{
+                startApplication(mAppInfo.packageName);
+            }
 			break;
 		case R.id.btn_app_info:
 			Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:"+mAppInfo.packageName));
@@ -259,10 +265,19 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 						rInfo.activityInfo.packageName,
 						rInfo.activityInfo.name));
 				launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(launchIntent);	
+
+                if (Build.VERSION.SDK_INT >= 16) {
+                    View openBtn = findViewById(R.id.btn_open);
+                    ActivityOptions opts = ActivityOptions.makeScaleUpAnimation(openBtn, 0, 0,
+                            openBtn.getMeasuredWidth(), openBtn.getMeasuredHeight());
+                    startActivity(launchIntent, opts.toBundle());
+                } else {
+                    startActivity(launchIntent);
+                }
 				return;
 			}
 		}
+        Toast.makeText(this, R.string.detail_toast_no_default_activity, Toast.LENGTH_SHORT).show();
 	}
 	
 	@Override
