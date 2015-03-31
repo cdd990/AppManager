@@ -146,7 +146,13 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 		case R.id.btn_market:
 			Uri uri = Uri.parse("market://details?id=" + mAppInfo.packageName);
 			Intent marketIntent = new Intent(Intent.ACTION_VIEW, uri);
-			startActivity(marketIntent);
+            try{
+                startActivity(marketIntent);
+            }catch (ActivityNotFoundException e){
+                uri = Uri.parse("https://play.google.com/store/apps/details?id="+mAppInfo.packageName);
+                marketIntent.setData(uri);
+                startActivity(marketIntent);
+            }
 			break;
 		case R.id.btn_app_dir:
 			openDir(mAppInfo.dataDir);
