@@ -10,4 +10,7 @@
     <string name="title_favorites">Favorites</string>
     <string name="title_debug">Debug</string>
 
+    <string name="detail_toast_disabled_while_open">This app is now DISABLED.\nPlease enable it first.</string>
+    <string name="detail_toast_no_default_activity">Default activity not found.</string>
+
 </resources>
