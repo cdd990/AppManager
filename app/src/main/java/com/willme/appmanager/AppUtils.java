@@ -24,20 +24,18 @@ public class AppUtils {
         boolean debuggable = false;
         try
         {
-            PackageInfo pinfo = context.getPackageManager().getPackageInfo(pkgName, PackageManager.GET_SIGNATURES);
-            Signature signatures[] = pinfo.signatures;
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(pkgName, PackageManager.GET_SIGNATURES);
+            Signature signatures[] = pInfo.signatures;
 
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
-
-            for ( int i = 0; i < signatures.length;i++)
-            {
-                ByteArrayInputStream stream = new ByteArrayInputStream(signatures[i].toByteArray());
+            for (Signature signature : signatures) {
+                ByteArrayInputStream stream = new ByteArrayInputStream(signature.toByteArray());
                 X509Certificate cert = (X509Certificate) cf.generateCertificate(stream);
                 debuggable = cert.getSubjectX500Principal().equals(DEBUG_DN);
                 if (debuggable)
                     break;
             }
-        }catch (Exception e){}
+        }catch (Exception ignore){}
         return debuggable;
     }
 

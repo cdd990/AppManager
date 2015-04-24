@@ -69,7 +69,13 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 		mPackageManager = getPackageManager();
 		String packageName = getIntent().getStringExtra(EXTRA_PACKAGE_NAME);
 		if(packageName == null){
-			packageName = getIntent().getData().getSchemeSpecificPart();
+			Uri data = getIntent().getData();
+			if(data != null)
+				packageName = data.getSchemeSpecificPart();
+			if(packageName == null){
+				finish();
+				return;
+			}
 		}
         mDisableButton = (Button) findViewById(R.id.btn_disable);
         try {
@@ -97,6 +103,7 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
         findViewById(R.id.btn_send_info).setOnClickListener(this);
         findViewById(R.id.btn_uninstall).setOnClickListener(this);
         findViewById(R.id.btn_force_stop).setOnClickListener(this);
+        findViewById(R.id.btn_components).setOnClickListener(this);
         if(Build.VERSION.SDK_INT >= 21){
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setActionBar(toolbar);
@@ -110,7 +117,7 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            finish();
+			onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -226,6 +233,11 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 				startActivity (uninstallIntent); 
 			}
 			break;
+        case R.id.btn_components:
+            Intent compoIntent = new Intent(this, ComponentsActivity.class);
+            compoIntent.putExtra(EXTRA_PACKAGE_NAME, mPackageInfo.packageName);
+            startActivity(compoIntent);
+            break;
 		}
 	}
 	
