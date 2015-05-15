@@ -28,6 +28,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -42,26 +43,44 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 	Button mDisableButton;
 	UninstallReceiver mReceiver;
 	
-	Handler mHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-            switch (msg.what){
-                case 1:
-                    try {
-                        mAppInfo = mPackageManager.getPackageInfo(mAppInfo.packageName, 0).applicationInfo;
-                        mDisableButton.setText(mAppInfo.enabled?"Disable":"Enable");
-                        mDisableButton.setEnabled(true);
-                    } catch (NameNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case 2:
-                    findViewById(R.id.btn_force_stop).setEnabled(true);
-                    break;
-            }
+	Handler mHandler = new UIHandler(this);
 
-		};
-	};
-	
+	static class UIHandler extends Handler{
+
+		WeakReference<AppDetailActivity> mActivity;
+
+		UIHandler(AppDetailActivity activity){
+
+			mActivity = new WeakReference<>(activity);
+
+		}
+
+		public void handleMessage(android.os.Message msg) {
+			AppDetailActivity activity = mActivity.get();
+			if(activity != null){
+				switch (msg.what){
+					case 1:
+						try {
+							activity.mAppInfo = activity.mPackageManager
+									.getPackageInfo(activity.mAppInfo.packageName, 0)
+									.applicationInfo;
+							activity.mDisableButton
+									.setText(activity.mAppInfo.enabled ? "Disable" : "Enable");
+							activity.mDisableButton
+									.setEnabled(true);
+						} catch (NameNotFoundException e) {
+							e.printStackTrace();
+						}
+						break;
+					case 2:
+						activity.findViewById(R.id.btn_force_stop).setEnabled(true);
+						break;
+				}
+			}
+
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,8 +100,8 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
         try {
             mPackageInfo = mPackageManager.getPackageInfo(packageName, 0);
             mAppInfo = mPackageInfo.applicationInfo;
-            String appLable = mPackageManager.getApplicationLabel(mAppInfo).toString();
-            ((TextView)findViewById(R.id.tv_app_name)).setText(appLable);
+            String appLabel = mPackageManager.getApplicationLabel(mAppInfo).toString();
+            ((TextView)findViewById(R.id.tv_app_name)).setText(appLabel);
             mDisableButton.setText(mAppInfo.enabled?"Disable":"Enable");
             ((ImageView)findViewById(R.id.iv_app_icon)).setImageDrawable(mPackageManager.getApplicationIcon(packageName));
             ((TextView)findViewById(R.id.tv_uid)).setText(String.valueOf(mAppInfo.uid));
