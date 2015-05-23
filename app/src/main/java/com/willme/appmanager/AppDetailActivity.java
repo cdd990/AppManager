@@ -85,7 +85,7 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_app_detail);
-		mPackageManager = getPackageManager();
+		mPackageManager = getApplicationContext().getPackageManager();
 		String packageName = getIntent().getStringExtra(EXTRA_PACKAGE_NAME);
 		if(packageName == null){
 			Uri data = getIntent().getData();
@@ -167,7 +167,7 @@ public class AppDetailActivity extends BaseActivity implements OnClickListener {
             Intent opsIntent = new Intent("com.willme.appops", Uri.parse("package:"+mAppInfo.packageName));
             try{
                 startActivity(opsIntent);
-            }catch (Exception e){}
+            }catch (Exception ignore){}
             break;
 		case R.id.btn_market:
 			Uri uri = Uri.parse("market://details?id=" + mAppInfo.packageName);
