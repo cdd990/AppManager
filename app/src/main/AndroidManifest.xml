@@ -2,13 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.willme.appmanager" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
+        android:name=".ManagerApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.willme.appmanager.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,18 +19,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.willme.appmanager.AppDetailActivity">
-            <intent-filter >
+        <activity android:name=".AppDetailActivity" >
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
-                <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS"/>
-                <data android:scheme="package"/>
+
+                <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />
+
+                <data android:scheme="package" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SearchActivity"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
-
+        <activity
+            android:name=".SearchActivity"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
+        <activity
+            android:name=".ComponentsActivity"
+            android:label="@string/title_activity_components" >
+        </activity>
+        <activity
+            android:name=".ProxyActivity"
+            android:label="@string/title_activity_proxy" >
+        </activity>
     </application>
 
 </manifest>

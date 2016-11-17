@@ -135,6 +135,7 @@ public class AppListAdapter extends BaseAdapter implements Filterable, SectionIn
                 final ArrayList<AppEntry> newValues = new ArrayList<>();
 
                 boolean isEngChars = prefixString.matches("[a-z]+");
+                boolean isDigit = prefixString.matches("[0-9]+");
 
                 outer:
                 for (int i = 0; i < count; i++) {
@@ -166,6 +167,11 @@ public class AppListAdapter extends BaseAdapter implements Filterable, SectionIn
                                 newValues.add(app);
                                 continue outer;
                             }
+                        }
+                    }else if(isDigit){
+                        String uidStr = String.valueOf(app.getApplicationInfo().uid);
+                        if(uidStr.startsWith(prefixString)){
+                            newValues.add(app);
                         }
                     }else{
                         if(labelLowerCase.contains(prefixString)){
