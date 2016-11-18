@@ -14,5 +14,7 @@
     <string name="detail_toast_no_default_activity">Default activity not found.</string>
     <string name="title_activity_components">ComponentsActivity</string>
     <string name="title_activity_proxy">ProxyActivity</string>
+    <string name="appwidget_text">Search App</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

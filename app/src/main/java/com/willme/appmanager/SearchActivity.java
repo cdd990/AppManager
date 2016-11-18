@@ -74,5 +74,11 @@ public class SearchActivity extends BaseActivity{
                 finish();
             }
         });
+        mSearchView.findViewById(R.id.btn_clear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEditText.setText("");
+            }
+        });
     }
 }

@@ -1,6 +1,12 @@
 package com.willme.appmanager;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +16,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,16 +56,21 @@ public class AppListAdapter extends BaseAdapter implements Filterable, SectionIn
 	 * Populate new items in the list.
 	 */
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		View view;
 		if (convertView == null) {
 			view = mInflater.inflate(R.layout.list_item_appinfo, parent, false);
 		} else {
 			view = convertView;
 		}
-		AppEntry item = (AppEntry) getItem(position);
-		((ImageView) view.findViewById(R.id.iv_app_icon)).setImageDrawable(item
-				.getIcon());
+		final AppEntry item = (AppEntry) getItem(position);
+        ImageView appIcon = (ImageView) view.findViewById(R.id.iv_app_icon);
+        appIcon.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startApplication(v, item.getApplicationInfo().packageName);
+            }
+        });
+		appIcon.setImageDrawable(item.getIcon());
 		((TextView) view.findViewById(R.id.tv_app_name)).setText(item
 				.getLabel());
 		((TextView) view.findViewById(R.id.tv_package_name)).setText(item
@@ -68,7 +80,35 @@ public class AppListAdapter extends BaseAdapter implements Filterable, SectionIn
 		return view;
 	}
 
-	@Override
+
+    void startApplication(View v, String pkgName) {
+        Intent intent = new Intent("android.intent.action.MAIN");
+        intent.addCategory("android.intent.category.LAUNCHER");
+        for (ResolveInfo rInfo : v.getContext().getPackageManager().queryIntentActivities(intent, 0)) {
+            if (rInfo.activityInfo.packageName.equals(pkgName)) {
+                Intent launchIntent = new Intent("android.intent.action.MAIN");
+                launchIntent.addCategory("android.intent.category.LAUNCHER");
+                launchIntent.setComponent(new ComponentName(
+                        rInfo.activityInfo.packageName,
+                        rInfo.activityInfo.name));
+                launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                Activity activity = (Activity)v.getContext();
+                if (Build.VERSION.SDK_INT >= 16) {
+                    ActivityOptions opts = ActivityOptions.makeScaleUpAnimation(v, 0, 0,
+                            v.getMeasuredWidth(), v.getMeasuredHeight());
+                    activity.startActivity(launchIntent, opts.toBundle());
+                } else {
+                    activity.startActivity(launchIntent);
+                }
+                return;
+            }
+        }
+        Toast.makeText(v.getContext(), R.string.detail_toast_no_default_activity, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
 	public int getCount() {
 		return mData == null ? 0 : mData.size();
 	}
